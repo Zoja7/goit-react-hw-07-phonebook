@@ -45,7 +45,7 @@ const contactsSlice = createSlice({
         ),
         state => {
           state.contacts.isLoading = true;
-          state.error = null;
+          state.contacts.error = null;
         }
       )
       .addMatcher(
@@ -56,7 +56,7 @@ const contactsSlice = createSlice({
         ),
         (state, { payload }) => {
           state.contacts.isLoading = false;
-          state.error = payload;
+          state.contacts.error = payload;
         }
       ),
 });

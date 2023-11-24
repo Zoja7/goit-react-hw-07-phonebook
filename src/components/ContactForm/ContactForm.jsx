@@ -14,10 +14,12 @@ const ContactForm = () => {
 
   const handleAddContact = data => {
     const hasDuplicated = contacts.some(
-      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+      contact =>
+        contact.name.toLowerCase() === data.name.toLowerCase() &&
+        contact.phone.toLowerCase() === data.phone.toLowerCase()
     );
     if (hasDuplicated) {
-      alert(`'${data.name}' is already in contacts!`);
+      alert(`'${data.name && data.phone}' is already in contacts!`);
       return;
     }
     const newContact = {
