@@ -1,27 +1,65 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { fetchContacts, addContact, deleteContact } from 'redux/operations';
 
 const initialState = {
-  // contacts: JSON.parse(localStorage.getItem('contacts')) ?? [],
-  contacts: [],
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
 };
+
 const contactsSlice = createSlice({
   // slice`s name
   name: 'contacts',
   // initial state of the slice
   initialState,
   // object of the redusers
-  reducers: {
-    addContact(state, { payload }) {
-      state.contacts = [...state.contacts, payload];
-      //   state.contacts.push(payload);
-    },
-    deleteContact(state, { payload }) {
-      state.contacts = state.contacts.filter(contact => contact.id !== payload);
-    },
-  },
+  reducers: {},
+
+  extraReducers: builder =>
+    builder
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.contacts.isLoading = false;
+        state.contacts.error = null;
+        state.contacts.items = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.contacts.isLoading = false;
+        state.contacts.error = null;
+        state.contacts.items = [...state.contacts.items, payload];
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.contacts.isLoading = false;
+        state.contacts.error = null;
+        state.contacts.items = state.contacts.items.filter(
+          contact => contact.id !== payload
+        );
+      })
+
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.pending,
+          addContact.pending,
+          deleteContact.pending
+        ),
+        state => {
+          state.contacts.isLoading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchContacts.rejected,
+          addContact.rejected,
+          deleteContact.rejected
+        ),
+        (state, { payload }) => {
+          state.contacts.isLoading = false;
+          state.error = payload;
+        }
+      ),
 });
 
-// action generator
-export const { deleteContact, addContact } = contactsSlice.actions;
 // slice`s reduser
 export const contactsReducer = contactsSlice.reducer;

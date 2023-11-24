@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
-import { addContact } from 'redux/contacts/contacts.reducer';
+import { addContact } from 'redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from 'redux/contacts/contacts.selectors';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contactsStore.contacts);
+  const contacts = useSelector(selectContacts);
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleAddContact = data => {
     const hasDuplicated = contacts.some(
@@ -26,7 +27,7 @@ const ContactForm = () => {
 
     dispatch(addContact(newContact));
 
-    setNumber('');
+    setPhone('');
     setName('');
   };
 
@@ -34,10 +35,10 @@ const ContactForm = () => {
     event.preventDefault();
     const data = {
       name,
-      number,
+      phone,
     };
 
-    if (data.name.trim() !== '' && data.number.trim() !== '') {
+    if (data.name.trim() !== '' && data.phone.trim() !== '') {
       handleAddContact(data);
     }
   };
@@ -51,8 +52,8 @@ const ContactForm = () => {
         setName(value);
         return;
       }
-      case 'number': {
-        setNumber(value);
+      case 'phone': {
+        setPhone(value);
         return;
       }
 
@@ -79,11 +80,11 @@ const ContactForm = () => {
           <p>Number</p>
           <input
             type="tel"
-            name="number"
+            name="phone"
             required
             pattern="^\+?\d{1,4}[ .\-]?\(?\d{1,3}\)?[ .\-]?\d{1,4}[ .\-]?\d{1,4}[ .\-]?\d{1,9}$"
             title="Format: XXX-XXX-XX-XX"
-            value={number}
+            value={phone}
             onChange={event => handleInputChange(event)}
           />
         </label>
