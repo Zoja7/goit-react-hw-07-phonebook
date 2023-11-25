@@ -1,6 +1,6 @@
 import { useState } from 'react';
-// import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import { addContact } from 'redux/operations';
@@ -22,62 +22,56 @@ const ContactForm = () => {
   const handleAddContact = data => {
     const hasDuplicated = contacts.some(
       contact =>
-        contact.name.toLowerCase() === data.name.toLowerCase() &&
+        contact.name.toLowerCase() === data.name.toLowerCase() ||
         contact.phone.toLowerCase() === data.phone.toLowerCase()
     );
     if (hasDuplicated) {
-      alert(`'${data.name && data.phone}' is already in contacts!`);
-      // toast.success('${data.name && data.phone}' is already in contacts', {
-      //   position: "top-right",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      // });
+      // alert(`'${data.name && data.phone}' is already in contacts!`);
+      toast.warn(`'${data.name && data.phone}' is already in contacts!'`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
       return;
     }
     const newContact = {
       id: nanoid(),
       ...data,
-      // ...data.toLowerCase() хотіла ось так привести контакт до одного регістру, але виникає помилка!
     };
-
-    // dispatch(addContact(newContact));
-    // setPhone('');
-    // setName('');
 
     dispatch(addContact(newContact))
       .then(() => {
         setPhone('');
         setName('');
-        alert('Contact added successfully!');
-        // toast.success('Contact added successfully!', {
-        //   position: 'top-right',
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: 'light',
-        // });
+        // alert('Contact added successfully!');
+        toast.success('Contact added successfully!', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       })
       .catch(error => {
-        alert(`Error adding contact: ${error}`);
-
-        // toast.error(`Error adding contact: ${error}`, {
-        //   position: 'top-right',
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: 'light',
-        // });
+        // alert(`Error adding contact: ${error}`);
+        toast.error(`Error adding contact: ${error}`, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       });
   };
 

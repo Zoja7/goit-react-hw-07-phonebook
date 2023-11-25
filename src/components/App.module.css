@@ -24,3 +24,8 @@
   width: 100%;
   max-width: 200px;
 }
+.buttonNotify{
+  border: none;
+  color: aliceblue;
+  background-color: aliceblue;
+}

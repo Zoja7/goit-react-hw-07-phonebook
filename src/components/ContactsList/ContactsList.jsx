@@ -1,5 +1,7 @@
 import ContactItem from 'components/ContactItem/ContactItem';
 import css from './ContactList.module.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/contacts.selectors';
 import { useEffect } from 'react';
@@ -14,10 +16,30 @@ export default function ContactsList() {
   useEffect(() => {
     dispatch(fetchContacts())
       .then(() => {
-        alert('Contacts downloaded successfully!');
+        // alert('Contacts downloaded successfully!');
+        toast.success('Contact downloaded successfully!', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       })
       .catch(error => {
-        alert(`Error downloading contacts: ${error}`);
+        // alert(`Error downloading contacts: ${error}`);
+        toast.error(`Error downloading contact: ${error}`, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       });
   }, [dispatch]);
 

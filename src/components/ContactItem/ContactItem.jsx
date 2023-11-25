@@ -1,4 +1,6 @@
 import { deleteContact } from 'redux/operations';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import css from './ContactItem.module.css';
 import { ReactComponent as IconTrash } from 'assets/icons/trashSvg.svg';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,10 +14,30 @@ export default function ContactItem({ contact }) {
   const handleDeleteContact = id => {
     dispatch(deleteContact(id))
       .then(() => {
-        alert('Contact deleted successfully!');
+        // alert('Contact deleted successfully!');
+        toast.success('Contact deleted successfully!', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       })
       .catch(error => {
-        alert(`Error deleting contact: ${error}`);
+        // alert(`Error deleting contact: ${error}`);
+        toast.error(`Error deleting contact: ${error}`, {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       });
   };
   return (
