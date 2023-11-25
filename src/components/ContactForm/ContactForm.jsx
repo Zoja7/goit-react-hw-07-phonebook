@@ -26,9 +26,8 @@ const ContactForm = () => {
         contact.phone.toLowerCase() === data.phone.toLowerCase()
     );
     if (hasDuplicated) {
-      // alert(`'${data.name && data.phone}' is already in contacts!`);
-      //    const notify = () => {
-      // toast.success('🦄 Wow so easy!', {
+      alert(`'${data.name && data.phone}' is already in contacts!`);
+      // toast.success('${data.name && data.phone}' is already in contacts', {
       //   position: "top-right",
       //   autoClose: 5000,
       //   hideProgressBar: false,
@@ -54,7 +53,7 @@ const ContactForm = () => {
         setPhone('');
         setName('');
         alert('Contact added successfully!');
-        // Toast.success('Contact added successfully!', {
+        // toast.success('Contact added successfully!', {
         //   position: 'top-right',
         //   autoClose: 5000,
         //   hideProgressBar: false,
@@ -68,7 +67,7 @@ const ContactForm = () => {
       .catch(error => {
         alert(`Error adding contact: ${error}`);
 
-        // Toast.error(`Error adding contact: ${error}`, {
+        // toast.error(`Error adding contact: ${error}`, {
         //   position: 'top-right',
         //   autoClose: 5000,
         //   hideProgressBar: false,
