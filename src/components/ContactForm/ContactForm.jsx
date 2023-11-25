@@ -42,6 +42,7 @@ const ContactForm = () => {
     const newContact = {
       id: nanoid(),
       ...data,
+      // ...data.toLowerCase() хотіла ось так привести контакт до одного регістру, але виникає помилка!
     };
 
     // dispatch(addContact(newContact));
