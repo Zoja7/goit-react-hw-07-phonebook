@@ -12,11 +12,17 @@ export default function ContactsList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchContacts())
+      .then(() => {
+        alert('Contacts downloaded successfully!');
+      })
+      .catch(error => {
+        alert(`Error downloading contacts: ${error}`);
+      });
   }, [dispatch]);
 
   const filteredContacts = contacts.filter(contact =>
-    contact.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+    contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (

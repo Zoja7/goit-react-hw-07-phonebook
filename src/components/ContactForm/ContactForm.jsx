@@ -1,13 +1,20 @@
 import { useState } from 'react';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import { addContact } from 'redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/contacts/contacts.selectors';
+import {
+  selectContacts,
+  selectContactsIsLoading,
+} from 'redux/contacts/contacts.selectors';
+import Loader from 'components/Loader/Loader';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectContactsIsLoading);
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -19,7 +26,18 @@ const ContactForm = () => {
         contact.phone.toLowerCase() === data.phone.toLowerCase()
     );
     if (hasDuplicated) {
-      alert(`'${data.name && data.phone}' is already in contacts!`);
+      // alert(`'${data.name && data.phone}' is already in contacts!`);
+      //    const notify = () => {
+      // toast.success('🦄 Wow so easy!', {
+      //   position: "top-right",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
       return;
     }
     const newContact = {
@@ -27,10 +45,40 @@ const ContactForm = () => {
       ...data,
     };
 
-    dispatch(addContact(newContact));
+    // dispatch(addContact(newContact));
+    // setPhone('');
+    // setName('');
 
-    setPhone('');
-    setName('');
+    dispatch(addContact(newContact))
+      .then(() => {
+        setPhone('');
+        setName('');
+        alert('Contact added successfully!');
+        // Toast.success('Contact added successfully!', {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'light',
+        // });
+      })
+      .catch(error => {
+        alert(`Error adding contact: ${error}`);
+
+        // Toast.error(`Error adding contact: ${error}`, {
+        //   position: 'top-right',
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: 'light',
+        // });
+      });
   };
 
   const handleSubmit = event => {
@@ -40,7 +88,10 @@ const ContactForm = () => {
       phone,
     };
 
-    if (data.name.trim() !== '' && data.phone.trim() !== '') {
+    if (
+      data.name.toLowerCase().trim() !== '' &&
+      data.phone.toLowerCase().trim() !== ''
+    ) {
       handleAddContact(data);
     }
   };
@@ -91,7 +142,7 @@ const ContactForm = () => {
           />
         </label>
         <button className={css.submitButton} type="submit">
-          Add contact
+          {isLoading ? <Loader /> : 'Add contact'}
         </button>
       </form>
     </>
