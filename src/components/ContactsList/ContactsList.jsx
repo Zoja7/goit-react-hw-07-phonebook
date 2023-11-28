@@ -3,18 +3,13 @@ import css from './ContactList.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectContacts,
-  selectContactsIsLoading,
-} from 'redux/contacts/contacts.selectors';
+import { selectContacts } from 'redux/contacts/contacts.selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/operations';
-// import Loader from 'components/Loader/Loader';
 
 export default function ContactsList() {
   const filter = useSelector(state => state.filtersStore.filters);
   const contacts = useSelector(selectContacts);
-  // const isLoadingFromRedux = useSelector(selectContactsIsLoading);
 
   const dispatch = useDispatch();
 
