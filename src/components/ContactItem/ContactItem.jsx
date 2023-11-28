@@ -3,17 +3,21 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import css from './ContactItem.module.css';
 import { ReactComponent as IconTrash } from 'assets/icons/trashSvg.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectContactsIsLoading } from 'redux/contacts/contacts.selectors';
+import { useDispatch } from 'react-redux';
 import Loader from 'components/Loader/Loader';
+import { useState } from 'react';
+
 export default function ContactItem({ contact }) {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectContactsIsLoading);
+  // const isLoadingFromRedux = useSelector(selectContactsIsLoading);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { name, phone, id } = contact;
   const handleDeleteContact = id => {
+    setIsLoading(true);
     dispatch(deleteContact(id))
       .then(() => {
+        setIsLoading(false);
         // alert('Contact deleted successfully!');
         toast.success('Contact deleted successfully!', {
           position: 'top-center',
@@ -27,6 +31,7 @@ export default function ContactItem({ contact }) {
         });
       })
       .catch(error => {
+        setIsLoading(false);
         // alert(`Error deleting contact: ${error}`);
         toast.error(`Error deleting contact: ${error}`, {
           position: 'top-center',

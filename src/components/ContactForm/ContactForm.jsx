@@ -5,17 +5,14 @@ import css from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import { addContact } from 'redux/operations';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectContacts,
-  selectContactsIsLoading,
-} from 'redux/contacts/contacts.selectors';
+import { selectContacts } from 'redux/contacts/contacts.selectors';
 import Loader from 'components/Loader/Loader';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectContactsIsLoading);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -43,9 +40,10 @@ const ContactForm = () => {
       id: nanoid(),
       ...data,
     };
-
+    setIsLoading(true);
     dispatch(addContact(newContact))
       .then(() => {
+        setIsLoading(false);
         setPhone('');
         setName('');
         // alert('Contact added successfully!');
@@ -61,6 +59,7 @@ const ContactForm = () => {
         });
       })
       .catch(error => {
+        setIsLoading(false);
         // alert(`Error adding contact: ${error}`);
         toast.error(`Error adding contact: ${error}`, {
           position: 'top-center',
