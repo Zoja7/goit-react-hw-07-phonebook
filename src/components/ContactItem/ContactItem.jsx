@@ -19,30 +19,12 @@ export default function ContactItem({ contact }) {
       .then(() => {
         setIsLoading(false);
         // alert('Contact deleted successfully!');
-        toast.success('Contact deleted successfully!', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        toast.success('Contact deleted successfully!', {});
       })
       .catch(error => {
         setIsLoading(false);
         // alert(`Error deleting contact: ${error}`);
-        toast.error(`Error deleting contact: ${error}`, {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        toast.error(`Error deleting contact: ${error}`, {});
       });
   };
   return (

@@ -47,30 +47,12 @@ const ContactForm = () => {
         setPhone('');
         setName('');
         // alert('Contact added successfully!');
-        toast.success('Contact added successfully!', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        toast.success('Contact added successfully!', {});
       })
       .catch(error => {
         setIsLoading(false);
         // alert(`Error adding contact: ${error}`);
-        toast.error(`Error adding contact: ${error}`, {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
+        toast.error(`Error adding contact: ${error}`, {});
       });
   };
 

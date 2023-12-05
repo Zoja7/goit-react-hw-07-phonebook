@@ -18,7 +18,15 @@ export const App = () => {
         <button className={css.buttonNotify} onClick={notify}>
           Notify!
         </button>
-        <ToastContainer />
+        <ToastContainer
+          position='top-center'
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          progress={undefined}
+          theme='light'/>
       </div>
     </div>
   );
